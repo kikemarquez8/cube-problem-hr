@@ -11,8 +11,9 @@ function processData(input) {
             testCases = parseInt(instruction);
         } else if(isCreatingNewMatrix(instruction)){
             [matrixDimension, operations] = instruction.split(' ');
+            matrix = null; // garbage collect it
             matrix = createMatrix(parseInt(matrixDimension))
-        } else {
+        } else if(isUpdateInstruction(instruction)){
 
         }
     })
@@ -35,6 +36,14 @@ function addNumberToTheEnd(accumulatedArray,number) {
 }
 function getAllNumbersAsStringArray(upperLimit){
     return [...Array(upperLimit)].map((_,i) -> i+1 ).map(e -> e.toString())
+}
+
+function isUpdateInstruction(instruction){
+    return instruction.split(" ")[0] == "UPDATE";
+}
+
+function isQueryInstruction(instruction){
+    return instruction.split(" ")[0] == "QUERY";
 }
 
 process.stdin.resume();
