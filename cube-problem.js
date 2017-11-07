@@ -10,12 +10,12 @@ function processData(input) {
         if(instruction.length == 1){
             testCases = parseInt(instruction);
         } else if(isCreatingNewMatrix(instruction)){
-            [matrixDimension, operations] = instruction.split(' ');
-            matrix = null; // garbage collect it
-            matrix = createMatrix(parseInt(matrixDimension))
+            //[matrixDimension, operations] = instruction.split(' ');
+            matrix = {};
+            //matrix = createMatrix(parseInt(matrixDimension))
         } else if(isUpdateInstruction(instruction)){
             var [,x,y,z,value] = instruction.split(" ");
-            var dimension = x + "." + y + "." + z;
+            var dimension = x +"." + y + "." + z;
             matrix[dimension] = parseInt(value)
         } else if (isQueryInstruction(instruction)){
             var [,x1,y1,z1,x3,y3,z3] = instruction.split(" ");
@@ -34,20 +34,6 @@ function isCreatingNewMatrix(instruction){
     return instruction.split(' ').length == 2 && !isNaN(parseInt(instruction.split(' ')[0])) && !isNaN(parseInt(instruction.split(' ')[1]));
 }
 
-function createMatrix(n){
-    //get All Numbers -> add all numbers to each number (1,1 ; 1,2; 1,3; 2,1 ,etc) -> remove helper at the beggining -> add all numbers again
-    return getAllNumbersAsStringArray(n).reduce(addNumberToTheEnd,[n]).slice(1).reduce(addNumberToTheEnd,[n]).slice(1).reduce((matrixObject,key) => {
-        matrixObject[key] = 0;
-        return matrixObject
-    },{});
-}
-
-function addNumberToTheEnd(accumulatedArray,number) {
-    return accumulatedArray.concat(getAllNumbersAsStringArray(accumulatedArray[0]).map(numberAsString => number + "." + numberAsString));
-}
-function getAllNumbersAsStringArray(upperLimit){
-    return [...Array(upperLimit)].map((_,i) => i+1 ).map(e => e.toString())
-}
 
 function isUpdateInstruction(instruction){
     return instruction.split(" ")[0] == "UPDATE";
@@ -75,4 +61,3 @@ process.stdin.on("data", function (input) {
 process.stdin.on("end", function () {
     processData(_input);
 });
-
