@@ -5,14 +5,11 @@ function processData(input) {
     var instructions = input.split("\n");
     let testCases;
     var matrix = {};
-    var matrixDimension, operations;
     instructions.map((instruction) => {
         if(instruction.length == 1){
             testCases = parseInt(instruction);
         } else if(isCreatingNewMatrix(instruction)){
-            //[matrixDimension, operations] = instruction.split(' ');
             matrix = {};
-            //matrix = createMatrix(parseInt(matrixDimension))
         } else if(isUpdateInstruction(instruction)){
             var [,x,y,z,value] = instruction.split(" ");
             var dimension = x +"." + y + "." + z;
